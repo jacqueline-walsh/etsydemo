@@ -28,6 +28,20 @@ end
     @order.buyer_id = current_user.id
     @order.seller_id = @seller.id
 
+    Stripe.api_key = ENV["STRIPE_API_KEY"]
+    token = params[:stripeToken]
+
+#    begin
+#      charge = Stripe::Charge.create(
+#        :amount => (@listing.price * 100).floor,
+#        :currency => "usd",
+#        :card => token
+#        )
+#      flash[:notice] = "Thanks for ordering with us"
+#    rescue Stripe::CardError => e
+#      flash[:danager] = e.message
+#    end
+
     respond_to do |format|
       if @order.save
         format.html { redirect_to root_url, notice: 'Order was successfully created.' }
